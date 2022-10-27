@@ -27,6 +27,10 @@ The compiler generates an Intermediate Representation (IR) json file. This file 
 Please run the following command to compile query definitions into IR:
 `python3 BeauCoup/py/compiler.py --gamma=1.0 /path/to/queries.yaml /path/to/IR.json`
 
+```shell
+python3 ./py/compiler.py --gamma=1.0 query_examples.yaml IR.json
+```
+
 The Intermediate Representation contains a list of hash function specifications, used for mapping the output of a random hash function to collecting different coupons. 
 
 The `--gamma` parameter adjusts per-packet memory access by limiting the expected number of coupons collected per packet. Use a smaller `--gamma` to further reduce memory access.
@@ -47,6 +51,10 @@ The P4 code geneator takes in an Intermediate Representation and substantiate th
 
 Please run the following command to generate the P4 program:
 `python3 BeauCoup/py/p4gen.py /path/to/IR.json BeauCoup/p4src/beaucoup.p4template /path/to/beaucoup.p4`
+
+```shell
+python3 ./py/p4gen.py IR.json p4src/beaucoup.p4template p4src/beaucoup.p4
+```
 
 To compile the P4 program and inspect hardware resource utilization on the Tofino switch, you need to use Barefoot P4 SDE (version 9.0.0 or greater).  
 * Run `bf-p4c -g beaucoup.p4` to compile. The `-v` flag is necessary for additional visualization.
